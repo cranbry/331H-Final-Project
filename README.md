@@ -1,56 +1,58 @@
-📘 LargeInt Class – Arbitrary-Precision Integer Arithmetic
-Overview
-This project implements a C++ class called LargeInt that allows manipulation of arbitrarily large non-negative integers using a custom doubly linked list for internal digit storage. It supports standard arithmetic and comparison operations, enabling use of large integers beyond the native limits of built-in types like int or long long.
+# 📘 LargeInt Class – Arbitrary-Precision Integer Arithmetic
 
-Features
-The LargeInt class provides the following functionality:
+## Overview
 
-✅ Arithmetic Operators
-+ Addition
+This project implements a C++ class called `LargeInt` that allows manipulation of arbitrarily large non-negative integers using a custom **doubly linked list** for internal digit storage. It supports standard arithmetic and comparison operations, enabling use of large integers beyond the native limits of built-in types like `int` or `long long`.
 
-- Subtraction (result is set to 0 if it would be negative)
+## Features
 
-* Multiplication
+### ✅ Arithmetic Operators
 
-/ Division
+- `+` Addition  
+- `-` Subtraction (result is set to 0 if it would be negative)  
+- `*` Multiplication  
+- `/` Division  
+- `%` Modulo  
 
-% Modulo
+### ✅ Relational Operators
 
-✅ Relational Operators
-== Equality
+- `==` Equality  
+- `<` Less than  
+- `<=` Less than or equal  
+- `>` Greater than  
+- `>=` Greater than or equal  
 
-< Less than
+### ✅ Input / Output
 
-<= Less than or equal
+- `>>` Input stream operator: Reads a large integer from user input  
+- `<<` Output stream operator: Prints the large integer to the console  
 
-> Greater than
+## Design Notes
 
->= Greater than or equal
+### 🔒 Encapsulation
 
-✅ Input / Output
->> Input stream operator: Reads a large integer from user input
+The `LargeInt` class uses a `DoublyLinkedList<int>` to store individual digits. The digits are stored in **reverse order** (least significant digit first) to simplify arithmetic operations.
 
-<< Output stream operator: Prints the large integer to the console
+### 🚫 No Inheritance from List
 
-Design Notes
-Encapsulation:
-The LargeInt class uses a DoublyLinkedList<int> to store individual digits. The digits are stored in reverse order for easier arithmetic operations (least significant digit first).
+The `LargeInt` class is **not derived** from the linked list class. Instead, it **aggregates** the list to maintain strong encapsulation and modularity.
 
-No Inheritance from List:
-The LargeInt class is not derived from the linked list class. Instead, it aggregates a list object internally to maintain strong encapsulation and modularity.
+### ♻️ No Dynamic Memory Management
 
-No Dynamic Memory Management:
-Since the class does not contain raw pointers (beyond the use of the list), there is no need for a copy constructor or destructor.
+Since the class does not use raw pointers directly (only through the list), there's **no need for a copy constructor or destructor**.
 
-Assumptions:
-The implementation assumes that all LargeInt values are non-negative (positive or zero only). Negative values are not supported.
+### 📝 Assumptions
 
-Operator Implementation:
-Arithmetic and logic are implemented manually using digit-wise operations, mimicking the behavior of hand-written calculations. Friend functions are used only for input/output operations, and no friend access is granted to the linked list class.
+All values handled by `LargeInt` are assumed to be **non-negative** (positive or zero only). Negative numbers are not supported.
 
-How to Compile
-Use a C++11 or newer compiler:
+### ⚙️ Operator Implementation
 
+All arithmetic and comparison operations are implemented manually using digit-wise operations. Only `friend` functions for input/output are used — `LargeInt` is **not** a friend of the linked list.
+
+## How to Compile
+
+Use a **C++11 or newer** compiler:
+
+```bash
 g++ main.cpp largeInt.cpp -o largeint
 ./largeint
-Make sure doublyLinkedList.h, largeInt.h, and their corresponding implementations are included in your build.
